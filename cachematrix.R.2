@@ -2,7 +2,6 @@
 
 ## makeCacheMatrix returns a special matrix that is able to cache it's inverse the function expects a square invertible matrix and performs some simple validation checks
 makeCacheMatrix <- function(x = matrix()) {
- 
   #basic validation moved outside of the core function to keep the code readable
   validateMatrix(x)
 
@@ -16,9 +15,11 @@ makeCacheMatrix <- function(x = matrix()) {
     mtx <<- m
     inv <<- NULL
   }
+  
   getMatrix <- function() mtx
   setInverse <- function(i) inv <<- i
   getInverse <- function() inv
+  
   list(setMatrix = setMatrix, getMatrix = getMatrix,
        setInverse = setInverse,
        getInverse = getInverse)
