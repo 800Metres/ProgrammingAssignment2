@@ -1,7 +1,7 @@
 ## This R file contains the primary functions makeCacheMatrix() and cacheSolve, plus some helper functions to generate sample squared invertble matrices that can be used if needed. Calling showSamples() displays 5 options
 
 ## makeCacheMatrix returns a special matrix that is able to cache it's inverse the function expects a square invertible matrix and performs some simple validation checks
-makeCacheMatrix <- function(x = matrix()) {
+makeCacheMatrix <- function(x = matrix(),...) {
   #basic validation moved outside of the core function to keep the code readable
   validateMatrix(x)
   inv <- NULL
@@ -26,6 +26,7 @@ makeCacheMatrix <- function(x = matrix()) {
 ## or generating the inverse and then caching it for later retrieval
 cacheSolve <- function(x, ...) {
   i <- x$getInverse()
+  #checks if there's been a cached value returned, then prints a message to state the same
   if(!is.null(i)){
     message("Inverse is already cached...")
     return(i)
@@ -38,7 +39,7 @@ cacheSolve <- function(x, ...) {
   i
 }
 
-## Simple function to validate the supplied matrix and gracefully degrade on error
+## Simple helper function to validate the supplied matrix and gracefully degrade on error
 validateMatrix <- function(mtx){
   errorText = "Parameter is not a square invertible matrix"
   #stop programme if supplied parameter is not a matrix
@@ -63,7 +64,7 @@ getSampleMatrix <- function(x){
     stop("Only 5 sample matrixes were generated. Please call this function passing in 1 to 5")
   }
   message(paste("Matrix Chosen is:", x))
-  generateSampleMatrixes()[[x]]
+  generateSampleMatrices()[[x]]
 }
 
 ## showSamples prints 5 sample matrices
@@ -81,8 +82,10 @@ showSamples <- function(){
 ## generateSampleMatrixcs (repeatedly) generates 5 (5*5) sample square invertible matrices containing 25 numbers from 1:1000 to help test the above primary functions
 generateSampleMatrices <- function(){
   sample = list()
+  #makes the sample generateion repeatable
   set.seed(1)
   for(i in 1:5){
+    #picks 25 numbers from 1:10000
     s <- sample(1:1000,25,replace=T)
     mtx <- matrix(s,5,5)
     if(det(mtx)!=0){
