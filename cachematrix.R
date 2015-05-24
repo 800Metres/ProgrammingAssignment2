@@ -2,13 +2,10 @@
 
 ## makeCacheMatrix returns a special matrix that is able to cache it's inverse the function expects a square invertible matrix and performs some simple validation checks
 makeCacheMatrix <- function(x = matrix()) {
- 
   #basic validation moved outside of the core function to keep the code readable
   validateMatrix(x)
-
   inv <- NULL
   mtx <- x
-  
   #simple getters and setters around the matrix and inverse, which if used invalidate any cached values
   setMatrix <- function(m){
     validateMatrix(m) 
@@ -44,7 +41,6 @@ cacheSolve <- function(x, ...) {
 ## Simple function to validate the supplied matrix and gracefully degrade on error
 validateMatrix <- function(mtx){
   errorText = "Parameter is not a square invertible matrix"
-  
   #stop programme if supplied parameter is not a matrix
   if(!is.matrix(mtx)) 
     stop(errorText)
@@ -78,10 +74,9 @@ showSamples <- function(){
     message(paste("Matrix",i,":"))
     print(samples[[i]])
   }
-  
-  message("If you'd like to use any of these matrices, then call getSampleMatrix(x) with the matrix number to return a matrix that can then be passed into createCacheMatrix()")
-  
+  message("If you'd like to use any of these matrices, call getSampleMatrix(x) with the matrix number to return a matrix that can then be passed into createCacheMatrix()")
 }
+
 
 ## generateSampleMatrixcs (repeatedly) generates 5 (5*5) sample square invertible matrices containing 25 numbers from 1:1000 to help test the above primary functions
 generateSampleMatrices <- function(){
